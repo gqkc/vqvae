@@ -1,4 +1,5 @@
 import argparse
+from datetime import datetime
 
 import numpy as np
 import torch
@@ -14,9 +15,11 @@ import src.export as export
 
 
 try:
-    from aim.pytorch_lightning import AimLogger
 
-    logger = AimLogger(experiment="vqvae", system_tracking_interval=None)
+    from pytorch_lightning.loggers import WandbLogger
+
+    logger = WandbLogger(name=datetime.now().strftime("train-%Y-%m-%d-%H-%M-%S"), project="vqvae-test", entity="cmap_vq")
+    #logger = AimLogger(experiment="vqvae", system_tracking_interval=None)
 except ImportError:
     logger = None
 print(f"Using logger {logger}.")
